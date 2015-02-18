@@ -18,6 +18,12 @@ class PollTestCase(unittest.TestCase):
         self.assertRegexpMatches(rv.data, '<title>Which web framework do you use\?</title>')
         self.assertRegexpMatches(rv.data, '<input type="radio" name="field" value="Flask"> Flask<br>')
 
+    @unittest.expectedFailure
+    def test_empty_result(self):
+        rv = self.app.get('/results')
+        self.assertEqual(rv.status_code, 200)
+        self.assertRegexpMatches(rv.data, 'No results yet')
+
 
 if __name__ == '__main__':
     unittest.main()
